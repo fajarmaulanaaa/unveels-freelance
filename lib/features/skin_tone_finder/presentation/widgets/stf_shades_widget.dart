@@ -64,6 +64,7 @@ class _STFShadesWidgetState extends State<STFShadesWidget> {
           ),
           child: Column(
             children: [
+              //tab
               Row(
                 children: [
                   Expanded(
@@ -285,45 +286,47 @@ class _SkinToneItemWidget extends StatelessWidget {
       },
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 5,
-              horizontal: 8,
-            ),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: isSelected ? Colors.white : Colors.transparent,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 8,
               ),
-              borderRadius: BorderRadius.circular(99),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 12,
-                  height: 12,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: color,
-                  ),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: isSelected ? Colors.white : Colors.transparent,
                 ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 1,
-                  ),
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
+                borderRadius: BorderRadius.circular(99),
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: color,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 1,
+                    ),
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

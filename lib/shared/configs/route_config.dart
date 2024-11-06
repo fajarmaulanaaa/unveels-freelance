@@ -3,7 +3,7 @@ enum AppRoute {
   ftlHome,
   ftlLive,
   saLive,
-  stfLive,
-  pfLive,
   stlLive,
+  stfWebview,
+  pfWebView,
 }

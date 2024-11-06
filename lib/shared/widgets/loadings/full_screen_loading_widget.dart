@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../configs/color_config.dart';
 import '../../extensions/context_parsing.dart';
-import '../../extensions/string_parsing.dart';
 
 class FullScreenLoadingWidget extends StatelessWidget {
   final String? message;
@@ -44,7 +43,7 @@ class FullScreenLoadingWidget extends StatelessWidget {
                     height: 12,
                   ),
                   Text(
-                    message ?? "${context.locale.loading.toCapitalize()}...",
+                    message ?? "Loading...",
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,

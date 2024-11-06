@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/utils/bottom_sheet_info.dart';
 import '../../service_locator.dart';
@@ -65,7 +65,7 @@ extension ContextParsing on BuildContext {
     return ModalRoute.of(this)?.isFirst;
   }
 
-  AppLocalizations get locale {
-    return AppLocalizations.of(this)!;
-  }
+  // AppLocalizations get locale {
+  //   return AppLocalizations.of(this)!;
+  // }
 }

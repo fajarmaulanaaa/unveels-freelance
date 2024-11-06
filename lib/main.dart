@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_cubit.dart';
 
 import 'core/observers/bloc_observer_info.dart';
 import 'core/routers/app_route_info.dart';
@@ -17,7 +18,7 @@ import 'shared/widgets/loadings/full_screen_loading_widget.dart';
 Future<void> main() async {
   // Initialize app
   await init();
-
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
@@ -49,8 +50,12 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<FullScreenLoadingCubit>(),
         ),
+         BlocProvider(
+          create: (context) => StfCubit(),
+        ),
       ],
       child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routeInformationParser: sl<AppRouteInfo>().route.routeInformationParser,
         routerDelegate: sl<AppRouteInfo>().route.routerDelegate,
         routeInformationProvider:
@@ -62,7 +67,7 @@ class MainApp extends StatelessWidget {
           return e.locale;
         }).toList(),
         localizationsDelegates: const [
-          AppLocalizations.delegate,
+          // AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,

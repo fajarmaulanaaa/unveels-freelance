@@ -81,13 +81,13 @@ class _HomePageState extends State<HomePage> {
 
   void _onStfLive() {
     context.goNamed(
-      AppRoute.stfLive.name,
+      AppRoute.stfWebview.name,
     );
   }
 
   void _onPfLive() {
     context.goNamed(
-      AppRoute.pfLive.name,
+      AppRoute.pfWebView.name,
     );
   }
 
