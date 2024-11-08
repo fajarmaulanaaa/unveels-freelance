@@ -3,8 +3,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class PfWebviewPage extends StatefulWidget {
   const PfWebviewPage({super.key});
-  // @override
-  // _PfWebviewPageState createState() => _PfWebviewPageState();
+
   @override
   State<PfWebviewPage> createState() => _PfWebviewPageState();
 }
@@ -19,10 +18,6 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
         initialUrlRequest: URLRequest(
             url: WebUri(
                 'https://skin-analysis2.unveels-frontend.pages.dev/personality-finder')),
-        //test-js.cibportofolio.com
-        // initialUrlRequest:
-        // URLRequest(url: WebUri(Uri.base.toString().replaceFirst("/#/", "/") + 'page.html')),
-        // initialFile: "assets/index.html",
         onWebViewCreated: (controller) async {
           webViewController = controller;
           // Listen to JavaScript handler 'flutterDataHandler'
@@ -39,6 +34,10 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
           webViewController?.addJavaScriptHandler(
             handlerName: 'detectionResult',
             callback: (args) {
+              // final resultData = args.isNotEmpty ? args[0] : "No data received";
+
+              print('saaassas');
+              print(args.isNotEmpty ? args[0] : 'asda');
               // Handle data sent from JavaScript here
               // setState(() {
               //   resultData =
