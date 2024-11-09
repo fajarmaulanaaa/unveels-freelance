@@ -8,6 +8,8 @@ import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_bloc.da
 
 import 'core/observers/bloc_observer_info.dart';
 import 'core/routers/app_route_info.dart';
+import 'features/face_analysis/presentation/cubit/fa_bloc.dart';
+import 'features/personality_finder/presentation/cubit/pf_bloc.dart';
 import 'service_locator.dart' as di;
 import 'service_locator.dart';
 import 'shared/configs/theme_config.dart';
@@ -52,6 +54,12 @@ class MainApp extends StatelessWidget {
         ),
          BlocProvider(
           create: (context) => StfBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PfBloc(),
+        ),
+        BlocProvider(
+          create: (context) => FaBloc(),
         ),
       ],
       child: MaterialApp.router(

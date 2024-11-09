@@ -104,6 +104,7 @@ class _StfWebviewPageState extends State<StfWebviewPage> {
                           callback: (args) {
                             // Handle data sent from JavaScript here
                             if (args.isNotEmpty) {
+                              print('detectionResult stffff');
                               print(args[0]);
                               final decodedData = json.decode(args[0] ?? "{}");
                               context

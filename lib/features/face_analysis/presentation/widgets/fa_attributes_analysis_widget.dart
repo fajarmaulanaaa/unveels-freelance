@@ -4,22 +4,21 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../shared/configs/asset_path.dart';
 import '../../../../shared/configs/size_config.dart';
 import '../../../../shared/extensions/context_parsing.dart';
-import '../cubit/pf_bloc.dart';
-import '../models/pf_model.dart';
+import '../cubit/fa_bloc.dart';
+import '../models/fa_model.dart';
 
-class PFAttributesAnalysisWidget extends StatelessWidget {
-  final PfState pfState;
+class FAAttributesAnalysisWidget extends StatelessWidget {
+  final FaState faState;
 
-  const PFAttributesAnalysisWidget({
+  const FAAttributesAnalysisWidget({
     Key? key,
-    required this.pfState,
+    required this.faState,
   }) : super(key: key);
 
-  // Helper function to find the outputLabel for a given attribute title
   String _getOutputLabelForTitle(String title) {
-    final model = pfState.resultPersonalityModel!.firstWhere(
+    final model = faState.resultFaceAnalyzeModel!.firstWhere(
           (model) => model.name == title,
-      orElse: () => ResultPersonalityModel(name: title, outputName: "", labels: [], outputLabel: ""),
+      orElse: () => ResultFaceAnalyzeModel(name: title, outputName: "", labels: [], outputLabel: ""),
     );
     return (model.outputLabel == null || model.outputLabel!.isEmpty) ? "N/A" : model.outputLabel!;
   }

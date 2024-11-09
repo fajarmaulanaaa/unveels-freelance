@@ -58,8 +58,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
   }
 
   //skin tone
-  Future<void> _onFetchSkinTone(
-      FetchSkinTone event, Emitter<StfState> emit) async {
+  Future<void> _onFetchSkinTone(FetchSkinTone event, Emitter<StfState> emit) async {
     try {
       emit(state.copyWith(isLoading: true));
       final skinToneData = await StfService().fetchSkinToneData();
@@ -79,8 +78,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
   }
 
   //skin tone
-  Future<void> _onFetchProduct(
-      FetchProduct event, Emitter<StfState> emit) async {
+  Future<void> _onFetchProduct(FetchProduct event, Emitter<StfState> emit) async {
     try {
       emit(state.copyWith(loadingProduct: true));
       final productData = await StfService()
