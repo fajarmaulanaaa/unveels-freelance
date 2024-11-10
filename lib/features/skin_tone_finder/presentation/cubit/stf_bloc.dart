@@ -22,6 +22,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
 
     //tone type
     on<FetchToneType>(_onFetchToneType);
+    on<UpdateToneTypeId>(_onUpdateToneTypeId);
 
     //skin tone
     on<UpdateSelectSkinId>(_onUpdateSelectSkinId);
@@ -29,6 +30,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
 
     //product
     on<FetchProduct>(_onFetchProduct);
+    on<UpdateHexColorProduct>(_onUpdateHexColorProduct);
 
     //change Tab
     on<ChangeTabActive>(_onChangeTabActive);
@@ -46,12 +48,18 @@ class StfBloc extends Bloc<StfEvent, StfState> {
             (item) => item.label == skinToneLabel,
           )
           .value;
-      print(selectIdToneType);
+      final listSkinTone = toneTypeData.options!
+          .where((e) => e.label != "" && e.value != "")
+          .map((e) => {"label": e.label!, "value": e.value!})
+          .toList();
+
       emit(state.copyWith(
         toneTypeData: toneTypeData,
         toneTypeSelectId: selectIdToneType,
+        toneTypeOptions: listSkinTone,
         isLoading: false,
       ));
+      add(FetchProduct());
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString(), isLoading: false));
     }
@@ -73,6 +81,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
         selectToneSkinId: matchTone[0]["value"],
         isLoading: false,
       ));
+      add(FetchProduct());
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString(), isLoading: false));
     }
@@ -85,12 +94,23 @@ class StfBloc extends Bloc<StfEvent, StfState> {
       emit(state.copyWith(loadingProduct: true));
       final productData = await StfService()
           .fetchProductData(state.selectToneSkinId, state.toneTypeSelectId);
-      print('asas');
       print(productData);
+      List<String> listHexa = productData.items
+          .map((product) {
+            // Filter untuk mendapatkan nilai hexacode
+            final hexacodeAttribute = product.customAttributes.firstWhere(
+              (attribute) => attribute.attributeCode == 'hexacode',
+            );
+            return hexacodeAttribute.value;
+          })
+          .where((hex) => hex != null)
+          .cast<String>()
+          .toList();
 
       emit(state.copyWith(
         productData: productData,
         loadingProduct: false,
+        listHexa: listHexa,
       ));
     } catch (e) {
       emit(state.copyWith(errorMessage: e.toString(), loadingProduct: false));
@@ -99,6 +119,11 @@ class StfBloc extends Bloc<StfEvent, StfState> {
 
   void _onUpdateHexColor(UpdateHexColor event, Emitter<StfState> emit) {
     emit(state.copyWith(hexColor: event.newColor));
+  }
+
+  void _onUpdateHexColorProduct(
+      UpdateHexColorProduct event, Emitter<StfState> emit) {
+    emit(state.copyWith(hexColorSelect: event.newColor));
   }
 
   void _onUpdateSkinType(UpdateSkinType event, Emitter<StfState> emit) {
@@ -115,5 +140,9 @@ class StfBloc extends Bloc<StfEvent, StfState> {
 
   void _onChangeTabActive(ChangeTabActive event, Emitter<StfState> emit) {
     emit(state.copyWith(activeTab: event.value));
+  }
+
+  void _onUpdateToneTypeId(UpdateToneTypeId event, Emitter<StfState> emit) {
+    emit(state.copyWith(toneTypeSelectId: event.newIdToneType));
   }
 }

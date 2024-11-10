@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onSaLive() {
     context.goNamed(
-      AppRoute.saLive.name,
+      AppRoute.saWebview.name,
     );
   }
 

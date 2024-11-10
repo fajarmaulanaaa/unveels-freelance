@@ -26,7 +26,7 @@ class AppRouteInfoImpl implements AppRouteInfo {
               AppRoute.ftlLive.router(),
             ],
           ),
-          AppRoute.saLive.router(),
+          AppRoute.saWebview.router(),
           AppRoute.stlLive.router(),
           AppRoute.stfWebview.router(),
           AppRoute.pfWebView.router(),

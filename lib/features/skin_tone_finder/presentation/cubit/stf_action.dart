@@ -10,6 +10,15 @@ abstract class StfEvent extends Equatable {
 //tone type
 class FetchToneType extends StfEvent {}
 
+class UpdateToneTypeId extends StfEvent {
+  final String newIdToneType;
+
+  const UpdateToneTypeId(this.newIdToneType);
+
+  @override
+  List<Object?> get props => [newIdToneType];
+}
+
 //skin tone
 class FetchSkinTone extends StfEvent {}
 
@@ -26,6 +35,14 @@ class UpdateSelectSkinId extends StfEvent {
 class FetchProduct extends StfEvent {}
 
 class ClearData extends StfEvent {}
+class UpdateHexColorProduct extends StfEvent {
+  final String newColor;
+
+  const UpdateHexColorProduct(this.newColor);
+
+  @override
+  List<Object?> get props => [newColor];
+}
 
 //tab
 class ChangeTabActive extends StfEvent {

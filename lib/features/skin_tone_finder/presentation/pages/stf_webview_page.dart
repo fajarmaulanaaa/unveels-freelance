@@ -22,7 +22,6 @@ class StfWebviewPage extends StatefulWidget {
 
 class _StfWebviewPageState extends State<StfWebviewPage> {
   InAppWebViewController? webViewController;
-  late StfBloc _stfBloc;
 
   // void _launchURL(String? url) async {
   //   if (!await launch(url!)) throw 'Could not launch $url';
@@ -39,15 +38,13 @@ class _StfWebviewPageState extends State<StfWebviewPage> {
   @override
   void initState() {
     requestCameraPermission();
-    _stfBloc = StfBloc();
     super.initState();
   }
 
   @override
   void dispose() {
-    print('keluarr');
-    // _stfBloc.add(UpdateHexColor(''));
-    _stfBloc.close();
+// update semua sesuai initial
+
     super.dispose();
   }
 
@@ -58,6 +55,13 @@ class _StfWebviewPageState extends State<StfWebviewPage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text('Skin Tone Finder'),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).pop();
+                context.read<StfBloc>().add(UpdateHexColor(''));
+              },
+            ),
             // actions: [
             //   IconButton(
             //     icon: const Icon(Icons.shopping_cart),
@@ -182,7 +186,7 @@ class _StfWebviewPageState extends State<StfWebviewPage> {
                           )
                         : const SizedBox(),
 
-                    state.hexColor != null && state.hexColor != ''
+                    state.hexColor != ''
                         ? _isShowShades
                             ? const SizedBox.shrink()
                             : BottomCopyrightWidget(

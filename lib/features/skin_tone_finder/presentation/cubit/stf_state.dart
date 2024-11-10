@@ -13,50 +13,55 @@ class StfState extends Equatable {
 
   // tonetype
   final ToneTypeModel? toneTypeData;
-  final List<String>? toneTypeOptions;
+  final List<Map<String, String>>? toneTypeOptions;
   final String? toneTypeSelectId;
 
   //product
   final bool? loadingProduct;
   final ProductModel? productData;
+  final List<String>? listHexa;
+  final String? hexColorSelect;
 
   //active tab
   final int? activeTab;
+  //hex color
 
-  const StfState({
-    this.isAllowCamera = false,
-    this.skinTone,
-    this.isLoading = false,
-    this.errorMessage,
-    this.hexColor,
-    this.skinType,
-    this.matchedTones,
-    this.selectToneSkinId,
-    this.toneTypeData,
-    this.toneTypeOptions,
-    this.toneTypeSelectId,
-    this.loadingProduct,
-    this.productData,
-    this.activeTab,
-  });
+  const StfState(
+      {this.isAllowCamera = false,
+      this.skinTone,
+      this.isLoading = false,
+      this.errorMessage,
+      this.hexColor,
+      this.skinType,
+      this.matchedTones,
+      this.selectToneSkinId,
+      this.toneTypeData,
+      this.toneTypeOptions,
+      this.toneTypeSelectId,
+      this.loadingProduct,
+      this.productData,
+      this.activeTab,
+      this.listHexa,
+      this.hexColorSelect});
 
   factory StfState.initial() {
     return const StfState(
-      isAllowCamera: false,
-      skinTone: null,
-      isLoading: false,
-      errorMessage: null,
-      hexColor: '',
-      skinType: '',
-      matchedTones: [],
-      selectToneSkinId: '',
-      toneTypeData: null,
-      toneTypeOptions: [],
-      toneTypeSelectId: '',
-      loadingProduct: false,
-      productData: null,
-      activeTab: 0,
-    );
+        isAllowCamera: false,
+        skinTone: null,
+        isLoading: false,
+        errorMessage: null,
+        hexColor: '',
+        skinType: '',
+        matchedTones: [],
+        selectToneSkinId: '',
+        toneTypeData: null,
+        toneTypeOptions: [],
+        toneTypeSelectId: '',
+        loadingProduct: false,
+        productData: null,
+        activeTab: 0,
+        listHexa: [],
+        hexColorSelect: '');
   }
 
   StfState copyWith({
@@ -71,12 +76,14 @@ class StfState extends Equatable {
 
     // tone type
     ToneTypeModel? toneTypeData,
-    List<String>? toneTypeOptions,
+    List<Map<String, String>>? toneTypeOptions,
     String? toneTypeSelectId,
 
     //product
     bool? loadingProduct,
     ProductModel? productData,
+    List<String>? listHexa,
+    String? hexColorSelect,
 
     //tab
     int? activeTab,
@@ -96,6 +103,8 @@ class StfState extends Equatable {
       loadingProduct: loadingProduct ?? this.loadingProduct,
       productData: productData ?? this.productData,
       activeTab: activeTab ?? this.activeTab,
+      listHexa: listHexa ?? this.listHexa,
+      hexColorSelect: hexColorSelect ?? this.hexColorSelect,
     );
   }
 
@@ -113,6 +122,8 @@ class StfState extends Equatable {
         toneTypeSelectId,
         loadingProduct,
         productData,
-        activeTab
+        activeTab,
+        listHexa,
+        hexColorSelect
       ];
 }

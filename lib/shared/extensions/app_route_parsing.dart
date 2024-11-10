@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unveels/features/personality_finder/presentation/pages/pf_webview_page.dart';
+import 'package:unveels/features/skin_analysis/presentation/pages/sa_webview_page.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/pages/stf_webview_page.dart';
 import '../../features/find_the_look/presentation/pages/ftl_home_page.dart';
 import '../../features/find_the_look/presentation/pages/ftl_live_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/shop_the_look/presentation/pages/stl_live_page.dart';
-import '../../features/skin_analysis/presentation/pages/sa_live_page.dart';
 import '../configs/route_config.dart';
 
 extension AppRouteParsing on AppRoute {
@@ -18,7 +18,7 @@ extension AppRouteParsing on AppRoute {
         return 'ftl_home';
       case AppRoute.ftlLive:
         return 'ftl_live';
-      case AppRoute.saLive:
+      case AppRoute.saWebview:
         return 'sa_live';
       case AppRoute.stfWebview:
         return 'stf_live';
@@ -46,8 +46,8 @@ extension AppRouteParsing on AppRoute {
         return FTLLivePage(
           params: params,
         );
-      case AppRoute.saLive:
-        return const SALivePage();
+      case AppRoute.saWebview:
+        return const SaWebviewPage();
       case AppRoute.stfWebview:
         return const StfWebviewPage();
       case AppRoute.pfWebView:

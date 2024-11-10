@@ -17,7 +17,7 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
       body: InAppWebView(
         initialUrlRequest: URLRequest(
             url: WebUri(
-                'https://skin-analysis2.unveels-frontend.pages.dev/personality-finder')),
+                'https://skin-analysis2.unveels-frontend.pages.dev/personality-finder-web')),
         onWebViewCreated: (controller) async {
           webViewController = controller;
           // Listen to JavaScript handler 'flutterDataHandler'
@@ -25,6 +25,7 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
             handlerName: 'detectionRun',
             callback: (args) {
               // Handle data sent from JavaScript here
+              
               setState(() {
                 // runningState =
                 //     args.isNotEmpty ? args[0] : "No data received";

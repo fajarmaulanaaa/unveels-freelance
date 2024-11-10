@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:unveels/features/skin_analysis/presentation/cubit/sa_bloc.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_bloc.dart';
 
 import 'core/observers/bloc_observer_info.dart';
@@ -50,8 +51,11 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<FullScreenLoadingCubit>(),
         ),
-         BlocProvider(
+        BlocProvider(
           create: (context) => StfBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SaBloc(),
         ),
       ],
       child: MaterialApp.router(
