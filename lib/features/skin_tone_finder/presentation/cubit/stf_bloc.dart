@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:unveels/features/skin_tone_finder/presentation/models/product_model.dart';
+import 'package:unveels/features/product/product_model.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/models/skin_tone_model.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/models/tone_type_model.dart';
 import 'package:unveels/shared/service/stf_service.dart';
@@ -66,8 +66,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
   }
 
   //skin tone
-  Future<void> _onFetchSkinTone(
-      FetchSkinTone event, Emitter<StfState> emit) async {
+  Future<void> _onFetchSkinTone(FetchSkinTone event, Emitter<StfState> emit) async {
     try {
       emit(state.copyWith(isLoading: true));
       final skinToneData = await StfService().fetchSkinToneData();
@@ -88,8 +87,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
   }
 
   //skin tone
-  Future<void> _onFetchProduct(
-      FetchProduct event, Emitter<StfState> emit) async {
+  Future<void> _onFetchProduct(FetchProduct event, Emitter<StfState> emit) async {
     try {
       emit(state.copyWith(loadingProduct: true));
       final productData = await StfService()

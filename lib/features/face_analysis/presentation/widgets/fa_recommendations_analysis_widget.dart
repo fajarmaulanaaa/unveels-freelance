@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/configs/size_config.dart';
-import '../cubit/pf_bloc.dart';
-import 'pf_product_item_widget.dart';
+import 'fa_product_item_widget.dart';
 
-class PfRecommendationsAnalysisWidget extends StatelessWidget {
-  final PfState pfState;
-
-  const PfRecommendationsAnalysisWidget({super.key, required this.pfState});
+class FaRecommendationsAnalysisWidget extends StatelessWidget {
+  const FaRecommendationsAnalysisWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +114,7 @@ class _ProductItemWidget extends StatelessWidget {
                   left: isFirst ? SizeConfig.horizontalPadding : 0,
                   right: isEnd ? SizeConfig.horizontalPadding : 0,
                 ),
-                child: const PFProductItemWidget(),
+                child: const FAProductItemWidget(),
               );
             },
           ),

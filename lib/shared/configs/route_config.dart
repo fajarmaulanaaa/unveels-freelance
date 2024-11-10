@@ -6,4 +6,5 @@ enum AppRoute {
   stlLive,
   stfWebview,
   pfWebView,
+  faWebView,
 }

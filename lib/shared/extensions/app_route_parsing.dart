@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:unveels/features/personality_finder/presentation/pages/pf_webview_page.dart';
 import 'package:unveels/features/skin_analysis/presentation/pages/sa_webview_page.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/pages/stf_webview_page.dart';
+import '../../features/face_analysis/presentation/pages/fa_webview_page.dart';
 import '../../features/find_the_look/presentation/pages/ftl_home_page.dart';
 import '../../features/find_the_look/presentation/pages/ftl_live_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
@@ -26,6 +27,8 @@ extension AppRouteParsing on AppRoute {
         return 'pf_live';
       case AppRoute.stlLive:
         return 'stl_live';
+      case AppRoute.faWebView:
+        return 'fa_live';
     }
   }
 
@@ -52,6 +55,8 @@ extension AppRouteParsing on AppRoute {
         return const StfWebviewPage();
       case AppRoute.pfWebView:
         return const PfWebviewPage();
+      case AppRoute.faWebView:
+        return const FaWebviewPage();
       case AppRoute.stlLive:
         return const STLLivePage();
     }

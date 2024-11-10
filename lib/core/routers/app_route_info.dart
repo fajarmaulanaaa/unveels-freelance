@@ -30,6 +30,7 @@ class AppRouteInfoImpl implements AppRouteInfo {
           AppRoute.stlLive.router(),
           AppRoute.stfWebview.router(),
           AppRoute.pfWebView.router(),
+          AppRoute.faWebView.router(),
         ],
       ),
     ],

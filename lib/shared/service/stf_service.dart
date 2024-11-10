@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:unveels/features/skin_tone_finder/presentation/models/product_model.dart';
+import 'package:unveels/features/product/product_model.dart';
 import 'dart:convert';
 import 'package:unveels/features/skin_tone_finder/presentation/models/skin_tone_model.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/models/tone_type_model.dart';
