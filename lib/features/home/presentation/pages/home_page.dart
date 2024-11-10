@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:permission_handler/permission_handler.dart';  // Import permission_handler package
 
 import '../../../../shared/configs/route_config.dart';
 import '../../../../shared/configs/size_config.dart';
@@ -14,6 +15,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();  // Request permission when the app starts
+  }
+
+  // Method to request camera permission
+  Future<void> _requestCameraPermission() async {
+    final status = await Permission.camera.request();
+
+    if (status.isDenied) {
+      // Handle permission denied scenario
+      print("Camera permission denied");
+    } else if (status.isPermanentlyDenied) {
+      // Handle permanently denied scenario (show settings prompt)
+      print("Camera permission permanently denied");
+      openAppSettings();
+    } else if (status.isGranted) {
+      // Permission granted
+      print("Camera permission granted");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +85,14 @@ class _HomePageState extends State<HomePage> {
               text: 'Shop the Look',
               onTap: _onStlLive,
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            ButtonWidget(
+              width: context.width,
+              text: 'Face Analyzer',
+              onTap: _onFaWeb,
+            ),
           ],
         ),
       ),
@@ -75,7 +107,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onSaLive() {
     context.goNamed(
-      AppRoute.saLive.name,
+      AppRoute.saWebview.name,
     );
   }
 
@@ -94,6 +126,12 @@ class _HomePageState extends State<HomePage> {
   void _onStlLive() {
     context.goNamed(
       AppRoute.stlLive.name,
+    );
+  }
+
+  void _onFaWeb() {
+    context.goNamed(
+      AppRoute.faWebView.name,
     );
   }
 }

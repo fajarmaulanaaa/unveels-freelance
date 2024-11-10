@@ -1,42 +1,42 @@
-import 'dart:convert'; // For base64 decoding
+import 'dart:convert';
 import 'dart:typed_data'; // For Uint8List
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:unveels/features/personality_finder/presentation/cubit/pf_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:unveels/features/face_analysis/presentation/cubit/fa_bloc.dart';
+import 'package:unveels/features/face_analysis/presentation/models/fa_model.dart';
 
 import '../../../../shared/configs/asset_path.dart';
 import '../../../../shared/configs/color_config.dart';
 import '../../../../shared/configs/size_config.dart';
+import '../../../../shared/extensions/fa_tab_bar_parsing.dart';
 import '../../../../shared/extensions/pf_tab_bar_parsing.dart';
-import '../models/pf_model.dart';
-import 'pf_attributes_analysis_widget.dart';
-import 'pf_personality_analysis_widget.dart';
-import 'pf_recommendations_analysis_widget.dart';
+import 'fa_attributes_analysis_widget.dart';
+import 'fa_personality_analysis_widget.dart';
+import 'fa_recommendations_analysis_widget.dart';
 
-class PFAnalysisResultsWidget extends StatefulWidget {
-  final PfState pfState;
-  const PFAnalysisResultsWidget({super.key, required this.pfState});
+class FAAnalysisResultsWidget extends StatefulWidget {
+  final FaState faState;
+  const FAAnalysisResultsWidget({super.key, required this.faState});
 
   @override
-  State<PFAnalysisResultsWidget> createState() =>
-      _PFAnalysisResultsWidgetState();
+  State<FAAnalysisResultsWidget> createState() =>
+      _FAAnalysisResultsWidgetState();
 }
 
-class _PFAnalysisResultsWidgetState extends State<PFAnalysisResultsWidget> {
-
+class _FAAnalysisResultsWidgetState extends State<FAAnalysisResultsWidget> {
   String? _getImageData() {
-    final model = widget.pfState.resultPersonalityModel!.firstWhere(
+    final model = widget.faState.resultFaceAnalyzeModel!.firstWhere(
           (model) => model.name == "Image Data",
-      orElse: () => ResultPersonalityModel(name: "Image Data", outputName: "", labels: [], outputLabel: ""),
+      orElse: () => ResultFaceAnalyzeModel(name: "Image Data", outputName: "", labels: [], outputLabel: ""),
     );
     return model.imageData;
   }
 
   String? _getPersonalityLabel() {
-    final model = widget.pfState.resultPersonalityModel!.firstWhere(
+    final model = widget.faState.resultFaceAnalyzeModel!.firstWhere(
           (model) => model.name == "Personality Finder",
-      orElse: () => ResultPersonalityModel(name: "Personality Finder", outputName: "", labels: [], outputLabel: ""),
+      orElse: () => ResultFaceAnalyzeModel(name: "Personality Finder", outputName: "", labels: [], outputLabel: ""),
     );
     return model.outputLabel;
   }
@@ -159,9 +159,9 @@ class _PFAnalysisResultsWidgetState extends State<PFAnalysisResultsWidget> {
             Expanded(
               child: TabBarView(
                 children: [
-                  const PFPersonalityAnalysisWidget(),
-                  PFAttributesAnalysisWidget(pfState: widget.pfState),
-                  PfRecommendationsAnalysisWidget(pfState: widget.pfState),
+                  const FAPersonalityAnalysisWidget(),
+                  FAAttributesAnalysisWidget(faState: widget.faState),
+                  const FaRecommendationsAnalysisWidget(),
                 ],
               ),
             ),

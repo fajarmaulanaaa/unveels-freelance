@@ -7,18 +7,18 @@ import '../../../../shared/widgets/clippers/face_clipper.dart';
 import '../../../../shared/widgets/lives/bottom_copyright_widget.dart';
 import '../../../../shared/widgets/lives/live_widget.dart';
 import '../../../find_the_look/presentation/pages/ftl_live_page.dart';
-import '../widgets/pf_analysis_results_widget.dart';
+import '../widgets/fa_analysis_results_widget.dart';
 
-class PFLivePage extends StatefulWidget {
-  const PFLivePage({
+class FALivePage extends StatefulWidget {
+  const FALivePage({
     super.key,
   });
 
   @override
-  State<PFLivePage> createState() => _PFLivePageState();
+  State<FALivePage> createState() => _FALivePageState();
 }
 
-class _PFLivePageState extends State<PFLivePage> {
+class _FALivePageState extends State<FALivePage> {
   late LiveStep step;
 
   bool _isShowAnalysisResults = false;
@@ -79,9 +79,9 @@ class _PFLivePageState extends State<PFLivePage> {
         );
 
       case LiveStep.scannedFace:
-        if (_isShowAnalysisResults) {
-          // return const PFAnalysisResultsWidget();
-        }
+        // if (_isShowAnalysisResults) {
+        //   return const FAAnalysisResultsWidget();
+        // }
 
         return BottomCopyrightWidget(
           child: Column(

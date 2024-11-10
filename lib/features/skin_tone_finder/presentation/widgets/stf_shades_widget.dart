@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_bloc.dart';
+import 'package:unveels/features/skin_tone_finder/presentation/widgets/stf_empty_product.dart';
 import '../../../../shared/configs/size_config.dart';
 import '../../../../shared/extensions/context_parsing.dart';
 import '../../../../shared/extensions/tone_tab_parsing.dart';
 import 'stf_product_item_widget.dart';
-
-final List<String> _matchedTones = [
-  "Cooler",
-  "Lighter",
-  "Perfect Fit",
-  "Warner",
-  "Darker",
-];
-
-final List<String> _skinTones = [
-  "Light tones",
-  "Medium tones",
-  "Dark Tones",
-];
 
 class STFShadesWidget extends StatefulWidget {
   final Function()? onViewAll;
@@ -32,201 +20,368 @@ class STFShadesWidget extends StatefulWidget {
 }
 
 class _STFShadesWidgetState extends State<STFShadesWidget> {
-  ToneTab? _selectedToneTab;
-  String? _selectedSkinTone;
-  String? _selectedMatchedTone;
+  // ToneTab? _selectedToneTab;
 
   @override
   void initState() {
     super.initState();
-
-    _init();
   }
 
-  void _init() {
-    _selectedToneTab = ToneTab.values.first;
-
-    _selectedSkinTone = _skinTones.first;
-
-    _selectedMatchedTone = _matchedTones.first;
+  void _refreshProduct() {
+    context.read<StfBloc>().add(FetchProduct());
   }
 
   @override
   Widget build(BuildContext context) {
-    final macthedToneItemWidth = (context.width * 0.9) / _matchedTones.length;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.horizontalPadding,
-          ),
-          child: Column(
-            children: [
-              //tab
-              Row(
-                children: [
-                  Expanded(
-                    child: _ToneTabItemWidget(
-                      tab: ToneTab.values.first,
-                      isSelected: _selectedToneTab == ToneTab.values.first,
-                      onTap: (value) {
-                        if (value != _selectedToneTab) {
-                          setState(() {
-                            _selectedToneTab = value;
-                          });
-                        }
-                      },
+    return BlocBuilder<StfBloc, StfState>(builder: (context, state) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.horizontalPadding,
+            ),
+            child: Column(
+              children: [
+                //tab
+                Row(
+                  children: [
+                    Expanded(
+                      child: _ToneTabItemWidget(
+                        tab: ToneTab.values.first,
+                        isSelected: state.activeTab == 0,
+                        onTap: (value) {
+                          context.read<StfBloc>().add(ChangeTabActive(0));
+                          context
+                              .read<StfBloc>()
+                              .add(UpdateHexColorProduct(''));
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 25,
-                    child: VerticalDivider(),
-                  ),
-                  Expanded(
-                    child: _ToneTabItemWidget(
-                      tab: ToneTab.values.last,
-                      isSelected: _selectedToneTab == ToneTab.values.last,
-                      onTap: (value) {
-                        if (value != _selectedToneTab) {
-                          setState(() {
-                            _selectedToneTab = value;
-                          });
-                        }
-                      },
+                    const SizedBox(
+                      height: 25,
+                      child: VerticalDivider(),
                     ),
-                  ),
-                ],
-              ),
-              const Divider(),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: 30,
-          child: ListView.separated(
-            itemCount: _skinTones.length,
-            shrinkWrap: true,
-            primary: false,
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 10,
-              );
-            },
-            itemBuilder: (context, index) {
-              final skinTone = _skinTones[index];
-              final isSelected = skinTone == _selectedSkinTone;
-              final isFirst = index == 0;
-              final isEnd = index == _skinTones.length - 1;
-              // get opacity from index, example: 1 => 0.1
-              final opacity = (1 - index / 10);
-
-              return Padding(
-                padding: EdgeInsets.only(
-                  left: isFirst ? SizeConfig.horizontalPadding : 0,
-                  right: isEnd ? SizeConfig.horizontalPadding : 0,
+                    Expanded(
+                      child: _ToneTabItemWidget(
+                        tab: ToneTab.values.last,
+                        isSelected: state.activeTab == 1,
+                        onTap: (value) {
+                          context.read<StfBloc>().add(ChangeTabActive(1));
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                child: _SkinToneItemWidget(
-                  title: skinTone,
-                  color: const Color(0xFF8F4F36).withOpacity(
-                    opacity,
-                  ),
-                  isSelected: isSelected,
-                  onTap: (value) {
-                    if (value != _selectedSkinTone) {
-                      setState(() {
-                        _selectedSkinTone = value;
-                      });
-                    }
-                  },
-                ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 13,
-        ),
-        Wrap(
-          direction: Axis.horizontal,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: _matchedTones.map((matchedTone) {
-            final isSelected = matchedTone == _selectedMatchedTone;
-            // get opacity from index, example: 1 => 0.9
-            final opacity = (1 - _matchedTones.indexOf(matchedTone) / 10);
-
-            return _MatchedToneItemWidget(
-              title: matchedTone,
-              color: const Color(0xFFCB8B5E).withOpacity(
-                opacity,
-              ),
-              isSelected: isSelected,
-              width: macthedToneItemWidth,
-              onTap: (value) {
-                if (value != _selectedMatchedTone) {
-                  setState(() {
-                    _selectedMatchedTone = value;
-                  });
-                }
-              },
-            );
-          }).toList(),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: GestureDetector(
-            onTap: widget.onViewAll,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: SizeConfig.horizontalPadding,
-              ),
-              child: const Text(
-                "View All",
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.white,
-                ),
-              ),
+                const Divider(),
+              ],
             ),
           ),
-        ),
-        SizedBox(
-          height: 130,
-          child: ListView.separated(
-            itemCount: 10,
-            shrinkWrap: true,
-            primary: false,
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 10,
-              );
-            },
-            itemBuilder: (context, index) {
-              final isFirst = index == 0;
-              final isEnd = index == 10 - 1;
-
-              return Padding(
-                padding: EdgeInsets.only(
-                  left: isFirst ? SizeConfig.horizontalPadding : 0,
-                  right: isEnd ? SizeConfig.horizontalPadding : 0,
-                ),
-                child: const STFProductItemWidget(),
-              );
-            },
+          const SizedBox(
+            height: 10,
           ),
-        ),
-      ],
-    );
+
+          //skin tone
+
+          state.activeTab == 0
+              ? Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: context.width / 2,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: SizeConfig.horizontalPadding,
+                              right: SizeConfig.horizontalPadding,
+                            ),
+                            child: _SkinToneItemWidget(
+                              title: state.skinType ?? '',
+                              color: const Color(0xFF8F4F36).withOpacity(
+                                0.8,
+                              ),
+                              isSelected: true,
+                              onTap: (value) {
+                                print(state.hexColor);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 13,
+                    ),
+                    state.matchedTones == null
+                        ? const SizedBox()
+                        : Wrap(
+                            direction: Axis.horizontal,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: state.matchedTones!.map((matchedTone) {
+                              final isSelected = matchedTone["value"] ==
+                                  state.selectToneSkinId;
+                              final opacity = (1 -
+                                  state.matchedTones!.indexOf(matchedTone) /
+                                      10);
+
+                              return _MatchedToneItemWidget(
+                                title: matchedTone["label"] ?? "",
+                                color: const Color(0xFFCB8B5E).withOpacity(
+                                  opacity,
+                                ),
+                                isSelected: isSelected,
+                                width: (context.width * 0.9) /
+                                    state.matchedTones!.length,
+                                onTap: (value) {
+                                  final newValue = state.matchedTones!
+                                      .where((e) => e['label'] == value)
+                                      .map((e) => e['value'])
+                                      .toList();
+                                  print(newValue[0]);
+                                  if (newValue.isNotEmpty) {
+                                    context
+                                        .read<StfBloc>()
+                                        .add(UpdateSelectSkinId(newValue[0]!));
+                                    Future.delayed(Duration(milliseconds: 500),
+                                        () {
+                                      context
+                                          .read<StfBloc>()
+                                          .add(FetchProduct());
+                                    });
+                                  }
+                                },
+                              );
+                            }).toList(),
+                          ),
+                  ],
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 30,
+                      child: ListView.separated(
+                        itemCount: state.toneTypeOptions!.length,
+                        shrinkWrap: true,
+                        primary: false,
+                        scrollDirection: Axis.horizontal,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            width: 10,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          final skinTone = state.toneTypeOptions![index];
+                          final isSelected =
+                              skinTone['value'] == state.toneTypeSelectId;
+                          final isFirst = index == 0;
+                          final isEnd =
+                              index == state.toneTypeOptions!.length - 1;
+                          // get opacity from index, example: 1 => 0.1
+                          final opacity = (1 - index / 10);
+
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              left: isFirst ? SizeConfig.horizontalPadding : 0,
+                              right: isEnd ? SizeConfig.horizontalPadding : 0,
+                            ),
+                            child: _SkinToneItemWidget(
+                              title: skinTone['label']!,
+                              color: const Color(0xFF8F4F36).withOpacity(
+                                opacity,
+                              ),
+                              isSelected: isSelected,
+                              onTap: (value) {
+                                final newValue = state.toneTypeOptions!
+                                    .where((e) => e['label'] == value)
+                                    .map((e) => e['value'])
+                                    .toList();
+                                print(newValue);
+                                if (newValue.isNotEmpty) {
+                                  context
+                                      .read<StfBloc>()
+                                      .add(UpdateToneTypeId(newValue[0]!));
+                                  Future.delayed(Duration(milliseconds: 500),
+                                      () {
+                                    context.read<StfBloc>().add(FetchProduct());
+                                  });
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      height: 30,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: SizeConfig.horizontalPadding,
+                            right: SizeConfig.horizontalPadding,
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<StfBloc>()
+                                      .add(UpdateHexColorProduct(''));
+                                },
+                                child: Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFF3D2B1F),
+                                  ),
+                                  child: const Icon(
+                                    Icons.do_disturb_alt_sharp,
+                                    color: Colors.white,
+                                    size: 25,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              ListView.separated(
+                                itemCount: state.listHexa!.length,
+                                shrinkWrap: true,
+                                primary: false,
+                                scrollDirection: Axis.horizontal,
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    width: 10,
+                                  );
+                                },
+                                itemBuilder: (context, index) {
+                                  final hexColor = state.listHexa![index];
+                                  final isSelected =
+                                      state.hexColorSelect == hexColor;
+                                  final opacity = (1 - index / 10);
+                                  final color =
+                                      '0xFF${hexColor.toUpperCase().replaceAll("#", "")}';
+
+                                  return _ColorHexWidget(
+                                    value: hexColor,
+                                    color: Color(
+                                        int.parse(color.replaceAll('#', '0x'))),
+                                    isSelected: isSelected,
+                                    onTap: (value) {
+                                      print(value);
+                                      if (value != state.hexColorSelect) {
+                                        context
+                                            .read<StfBloc>()
+                                            .add(UpdateHexColorProduct(value));
+                                      }
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+          const SizedBox(
+            height: 10,
+          ),
+
+          //product
+          state.loadingProduct!
+              ? const SizedBox(
+                  height: 150,
+                  child: Center(child: CircularProgressIndicator()))
+              : state.productData != null &&
+                      state.productData!.items.length != 0
+                  ? Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            onTap: widget.onViewAll,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: SizeConfig.horizontalPadding,
+                              ),
+                              child: const Text(
+                                "View All",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 130,
+                          child: ListView.separated(
+                            itemCount: state.hexColorSelect != ''
+                                ? state.productData!.items
+                                    .where((product) =>
+                                        product.customAttributes
+                                            .firstWhere(
+                                              (e) =>
+                                                  e.attributeCode == 'hexacode',
+                                            )
+                                            .value ==
+                                        state.hexColorSelect)
+                                    .toList()
+                                    .length
+                                : state.productData!.items.length,
+                            shrinkWrap: true,
+                            primary: false,
+                            scrollDirection: Axis.horizontal,
+                            separatorBuilder: (context, index) {
+                              return const SizedBox(
+                                width: 10,
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              final isFirst = index == 0;
+                              final isEnd =
+                                  index == state.productData!.items.length - 1;
+
+                              final product = state.productData!.items[index];
+
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: isFirst
+                                      ? SizeConfig.horizontalPadding
+                                      : 0,
+                                  right:
+                                      isEnd ? SizeConfig.horizontalPadding : 0,
+                                ),
+                                child: STFProductItemWidget(
+                                  productName: product.name,
+                                  brandName: "Brand Name",
+                                  price: product.price.toString(),
+                                  originalPrice:
+                                      product.price.toString().toString(),
+                                  imagePath:
+                                      product.mediaGalleryEntries[0].file,
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    )
+                  : const SizedBox(),
+        ],
+      );
+    });
   }
 }
 
@@ -260,6 +415,54 @@ class _ToneTabItemWidget extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ColorHexWidget extends StatelessWidget {
+  final Color color;
+  final String value;
+  final bool isSelected;
+  final Function(String value) onTap;
+
+  const _ColorHexWidget({
+    required this.color,
+    required this.value,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTap(value);
+      },
+      child: Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: isSelected ? Colors.white : Colors.transparent,
+                  width: 2,
+                ),
+              ),
+              child: Container(
+                width: 28,
+                height: 28,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: color,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -299,7 +502,7 @@ class _SkinToneItemWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(99),
               ),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                     width: 12,
@@ -310,19 +513,14 @@ class _SkinToneItemWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(
-                    width: 5,
+                    width: 6,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 1,
-                    ),
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
+                  Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
                     ),
                   ),
                 ],

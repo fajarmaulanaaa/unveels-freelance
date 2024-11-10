@@ -4,10 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_cubit.dart';
+import 'package:unveels/features/skin_analysis/presentation/cubit/sa_bloc.dart';
+import 'package:unveels/features/skin_tone_finder/presentation/cubit/stf_bloc.dart';
 
 import 'core/observers/bloc_observer_info.dart';
 import 'core/routers/app_route_info.dart';
+import 'features/face_analysis/presentation/cubit/fa_bloc.dart';
+import 'features/personality_finder/presentation/cubit/pf_bloc.dart';
 import 'service_locator.dart' as di;
 import 'service_locator.dart';
 import 'shared/configs/theme_config.dart';
@@ -50,8 +53,17 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => di.sl<FullScreenLoadingCubit>(),
         ),
-         BlocProvider(
-          create: (context) => StfCubit(),
+        BlocProvider(
+          create: (context) => StfBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SaBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PfBloc(),
+        ),
+        BlocProvider(
+          create: (context) => FaBloc(),
         ),
       ],
       child: MaterialApp.router(

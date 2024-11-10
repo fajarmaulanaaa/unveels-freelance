@@ -2,31 +2,32 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:unveels/features/face_analysis/presentation/cubit/fa_bloc.dart';
+import 'package:unveels/features/face_analysis/presentation/models/fa_model.dart';
+import 'package:unveels/features/face_analysis/presentation/widgets/fa_analysis_results_widget.dart';
 import 'package:unveels/features/personality_finder/presentation/cubit/pf_bloc.dart';
-import 'package:unveels/features/personality_finder/presentation/models/pf_model.dart';
 
-import '../widgets/pf_analysis_results_widget.dart';
-
-class PfWebviewPage extends StatefulWidget {
-  const PfWebviewPage({super.key});
+class FaWebviewPage extends StatefulWidget {
+  const FaWebviewPage({super.key});
 
   @override
-  State<PfWebviewPage> createState() => _PfWebviewPageState();
+  State<FaWebviewPage> createState() => _FaWebviewPageState();
 }
 
-class _PfWebviewPageState extends State<PfWebviewPage> {
+class _FaWebviewPageState extends State<FaWebviewPage> {
   InAppWebViewController? webViewController;
+  bool _isResultReady = false;
   bool _showAnalysisResults = false;
   bool _isLoading = false;
   String _debugMessage = "";
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PfBloc, PfState>(
+    return BlocBuilder<FaBloc, FaState>(
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Personality Finder'),
+              title: const Text('Face Analysis'),
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () async {
@@ -38,7 +39,7 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
               //     icon: const Icon(Icons.print),
               //     tooltip: 'Print',
               //     onPressed: () {
-              //       print(context.read<PfBloc>().state.resultPersonalityModel);
+              //       // print(context.read<FaBloc>().state.resultPersonalityModel);
               //     },
               //   ),
               // ],
@@ -76,19 +77,19 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
 
                           // Ensure decodedData is a List and parse each item as ResultPersonalityModel
                           if (decodedData is List) {
-                            List<ResultPersonalityModel> data = decodedData
-                                .map((item) => ResultPersonalityModel.fromJson(item))
+                            List<ResultFaceAnalyzeModel> data = decodedData
+                                .map((item) => ResultFaceAnalyzeModel.fromJson(item))
                                 .toList();
 
                             // Flatten list if necessary (ensure data structure is compatible with expand)
-                            List<ResultPersonalityModel> flatList = data.expand((x) => [x]).toList();
+                            List<ResultFaceAnalyzeModel> flatList = data.expand((x) => [x]).toList();
 
                             // for (var item in flatList) {
                             //   print(item.name);
                             //   context.read<PfBloc>().add(UpdateDataResultPf(item));
                             // }
 
-                            context.read<PfBloc>().add(UpdateDataResultPf(flatList));
+                            context.read<FaBloc>().add(UpdateDataResultFa(flatList));
 
                             setState(() {
                               _showAnalysisResults = true;
@@ -122,7 +123,7 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
                     child: CircularProgressIndicator(),
                   ),
                 if (_showAnalysisResults)
-                  PFAnalysisResultsWidget(pfState: context.read<PfBloc>().state),
+                  FAAnalysisResultsWidget(faState: context.read<FaBloc>().state),
               ],
             ),
           );
