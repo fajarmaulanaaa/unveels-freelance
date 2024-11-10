@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/configs/size_config.dart';
+import '../cubit/pf_bloc.dart';
 import 'pf_product_item_widget.dart';
 
 class PfRecommendationsAnalysisWidget extends StatelessWidget {
-  const PfRecommendationsAnalysisWidget({super.key});
+  final PfState pfState;
+
+  const PfRecommendationsAnalysisWidget({super.key, required this.pfState});
 
   @override
   Widget build(BuildContext context) {

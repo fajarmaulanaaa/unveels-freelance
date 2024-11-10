@@ -161,7 +161,7 @@ class _PFAnalysisResultsWidgetState extends State<PFAnalysisResultsWidget> {
                 children: [
                   const PFPersonalityAnalysisWidget(),
                   PFAttributesAnalysisWidget(pfState: widget.pfState),
-                  const PfRecommendationsAnalysisWidget(),
+                  PfRecommendationsAnalysisWidget(pfState: widget.pfState),
                 ],
               ),
             ),
