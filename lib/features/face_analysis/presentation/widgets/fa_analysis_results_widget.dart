@@ -10,7 +10,6 @@ import '../../../../shared/configs/asset_path.dart';
 import '../../../../shared/configs/color_config.dart';
 import '../../../../shared/configs/size_config.dart';
 import '../../../../shared/extensions/fa_tab_bar_parsing.dart';
-import '../../../../shared/extensions/pf_tab_bar_parsing.dart';
 import 'fa_attributes_analysis_widget.dart';
 import 'fa_personality_analysis_widget.dart';
 import 'fa_recommendations_analysis_widget.dart';
@@ -59,7 +58,7 @@ class _FAAnalysisResultsWidgetState extends State<FAAnalysisResultsWidget> {
       ),
       color: Colors.black,
       child: DefaultTabController(
-        length: PFTabBar.values.length,
+        length: FATabBar.values.length,
         child: Column(
           children: [
             Padding(
@@ -150,7 +149,7 @@ class _FAAnalysisResultsWidgetState extends State<FAAnalysisResultsWidget> {
               indicatorPadding: EdgeInsets.zero,
               dividerColor: const Color(0xFF9E9E9E),
               dividerHeight: 1.5,
-              tabs: PFTabBar.values.map((e) {
+              tabs: FATabBar.values.map((e) {
                 return Tab(
                   text: e.title,
                 );
@@ -159,9 +158,8 @@ class _FAAnalysisResultsWidgetState extends State<FAAnalysisResultsWidget> {
             Expanded(
               child: TabBarView(
                 children: [
-                  const FAPersonalityAnalysisWidget(),
                   FAAttributesAnalysisWidget(faState: widget.faState),
-                  const FaRecommendationsAnalysisWidget(),
+                  FaRecommendationsAnalysisWidget(faState: widget.faState),
                 ],
               ),
             ),

@@ -89,6 +89,7 @@ class _PfWebviewPageState extends State<PfWebviewPage> {
                             // }
 
                             context.read<PfBloc>().add(UpdateDataResultPf(flatList));
+                            context.read<PfBloc>().add(FetchProduct());
 
                             setState(() {
                               _showAnalysisResults = true;

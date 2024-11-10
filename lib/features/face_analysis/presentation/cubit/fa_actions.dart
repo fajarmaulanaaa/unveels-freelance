@@ -21,3 +21,5 @@ class UpdateDataResultFa extends FaEvent {
 
   UpdateDataResultFa(this.decodedData);
 }
+
+class FetchProduct extends FaEvent {}
