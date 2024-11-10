@@ -99,6 +99,7 @@ class StfBloc extends Bloc<StfEvent, StfState> {
             final hexacodeAttribute = product.customAttributes.firstWhere(
               (attribute) => attribute.attributeCode == 'hexacode',
             );
+            //return
             return hexacodeAttribute.value;
           })
           .where((hex) => hex != null)
