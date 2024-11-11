@@ -8,6 +8,9 @@ class PfState extends Equatable {
   // Product fields
   final bool? loadingProduct;
   final ProductModel? productData;
+  final ProductModelLip? productModelLip;
+  final ProductModelPerfume? productModelPerfume;
+  final ProductModelLook? productModelLook;
 
   // Error message field
   final String? errorMessage;
@@ -18,6 +21,9 @@ class PfState extends Equatable {
     this.resultPersonalityModel,
     this.loadingProduct,
     this.productData,
+    this.productModelLip,
+    this.productModelPerfume,
+    this.productModelLook,
     this.errorMessage,
   });
 
@@ -28,6 +34,9 @@ class PfState extends Equatable {
       resultPersonalityModel: null,
       loadingProduct: false,
       productData: null,
+      productModelLip: null,
+      productModelPerfume: null,
+      productModelLook: null,
       errorMessage: null,
     );
   }
@@ -38,6 +47,9 @@ class PfState extends Equatable {
     List<ResultPersonalityModel>? resultPersonalityModel,
     bool? loadingProduct,
     ProductModel? productData,
+    ProductModelLip? productModelLip,
+    ProductModelPerfume? productModelPerfume,
+    ProductModelLook? productModelLook,
     String? errorMessage,
   }) {
     return PfState(
@@ -46,6 +58,9 @@ class PfState extends Equatable {
       resultPersonalityModel: resultPersonalityModel ?? this.resultPersonalityModel,
       loadingProduct: loadingProduct ?? this.loadingProduct,
       productData: productData ?? this.productData,
+      productModelLip: productModelLip ?? this.productModelLip,
+      productModelPerfume: productModelPerfume ?? this.productModelPerfume,
+      productModelLook: productModelLook ?? this.productModelLook,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
@@ -57,6 +72,9 @@ class PfState extends Equatable {
     resultPersonalityModel,
     loadingProduct,
     productData,
+    productModelLip,
+    productModelPerfume,
+    productModelLook,
     errorMessage,
   ];
 }

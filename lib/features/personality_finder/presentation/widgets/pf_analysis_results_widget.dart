@@ -159,7 +159,7 @@ class _PFAnalysisResultsWidgetState extends State<PFAnalysisResultsWidget> {
             Expanded(
               child: TabBarView(
                 children: [
-                  const PFPersonalityAnalysisWidget(),
+                  PFPersonalityAnalysisWidget(pfState: widget.pfState),
                   PFAttributesAnalysisWidget(pfState: widget.pfState),
                   PfRecommendationsAnalysisWidget(pfState: widget.pfState),
                 ],

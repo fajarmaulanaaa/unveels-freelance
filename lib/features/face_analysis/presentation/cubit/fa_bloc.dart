@@ -4,6 +4,9 @@ import 'package:unveels/features/face_analysis/presentation/models/fa_model.dart
 
 import '../../../../shared/service/fa_service.dart';
 import '../../../product/product_model.dart';
+import '../../../product/product_model_lipstick.dart';
+import '../../../product/product_model_look.dart';
+import '../../../product/product_model_perfume.dart';
 
 part 'fa_actions.dart';
 part 'fa_state.dart';
@@ -29,14 +32,24 @@ class FaBloc extends Bloc<FaEvent, FaState> {
       final faceValue = _getFaceValue(state);
 
       if (faceValue == "N/A") {
-        throw Exception("No matching face value found");
+        throw Exception("No matching personality value found");
       }
 
       final productData = await FaService().fetchProductData(faceValue);
+
+      final productDataLip = await FaService().fetchProductLipData(faceValue);
+
+      final productDataLook = await FaService().fetchProductLookData(faceValue);
+
+      final productDataPerfume = await FaService().fetchProductPerfumeData(faceValue);
+
       print(productData);
 
       emit(state.copyWith(
         productData: productData,
+        productModelLip: productDataLip,
+        productModelLook: productDataLook,
+        productModelPerfume: productDataPerfume,
         loadingProduct: false,
       ));
     } catch (e) {

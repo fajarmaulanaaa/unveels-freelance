@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../../shared/configs/size_config.dart';
+import '../../../product/product_model_lipstick.dart';
+import '../../../product/product_model_look.dart';
+import '../../../product/product_model_perfume.dart';
 import '../cubit/pf_bloc.dart';
 import 'pf_product_item_widget.dart';
 
@@ -20,7 +23,7 @@ class PfRecommendationsAnalysisWidget extends StatelessWidget {
         children: [
           _ProductItemWidget(
             title: "Perfumes Recommendations",
-            pfState: pfState,
+            pfState: pfState.productModelPerfume,
           ),
           const SizedBox(
             height: 30,
@@ -29,7 +32,7 @@ class PfRecommendationsAnalysisWidget extends StatelessWidget {
             title: "Look Recommendations",
             description:
             "A bold red lipstick and defined brows, mirror your strong, vibrant personality",
-            pfState: pfState,
+            pfState: pfState.productModelLook,
           ),
           const SizedBox(
             height: 30,
@@ -37,14 +40,7 @@ class PfRecommendationsAnalysisWidget extends StatelessWidget {
           _ProductItemWidget(
             title: "Lip Color Recommendations",
             description: "The best lip color for you are orange shades",
-            pfState: pfState,
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          _ProductItemWidget(
-            title: "Accessories Recommendations",
-            pfState: pfState,
+            pfState: pfState.productModelLip,
           ),
         ],
       ),
@@ -55,7 +51,7 @@ class PfRecommendationsAnalysisWidget extends StatelessWidget {
 class _ProductItemWidget extends StatelessWidget {
   final String title;
   final String? description;
-  final PfState pfState;
+  final dynamic pfState; // Change to dynamic type to handle different product models
 
   const _ProductItemWidget({
     required this.title,
@@ -65,6 +61,9 @@ class _ProductItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine which product model is being passed in
+    final items = _getItemsBasedOnProductType(pfState);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -105,7 +104,7 @@ class _ProductItemWidget extends StatelessWidget {
         SizedBox(
           height: 242,
           child: ListView.separated(
-            itemCount: pfState.productData!.items.length,
+            itemCount: items.length, // Use the filtered list length
             shrinkWrap: true,
             primary: false,
             scrollDirection: Axis.horizontal,
@@ -116,14 +115,14 @@ class _ProductItemWidget extends StatelessWidget {
             },
             itemBuilder: (context, index) {
               final isFirst = index == 0;
-              final isEnd = index == pfState.productData!.items.length - 1;
+              final isEnd = index == items.length - 1;
 
               // Extracting item properties
-              final item = pfState.productData!.items[index];
+              final item = items[index];
               final productName = item.name;
-              final brandName = "Brand Name";
+              final brandName = "Brand Name"; // Modify if you have brand info
               final price = item.price?.toString();
-              final originalPrice = item.price?.toString().toString();
+              final originalPrice = item.price?.toString(); // Same as price for now
               final imagePath = item.mediaGalleryEntries[0].file;
 
               return Padding(
@@ -144,5 +143,17 @@ class _ProductItemWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  // This method returns the appropriate list of items based on the product type
+  List<dynamic> _getItemsBasedOnProductType(dynamic pfState) {
+    if (pfState is ProductModelLip) {
+      return pfState.items!; // Assuming ProductModelLip has 'items'
+    } else if (pfState is ProductModelPerfume) {
+      return pfState.items!; // Assuming ProductModelPerfume has 'items'
+    } else if (pfState is ProductModelLook) {
+      return pfState.items!; // Assuming ProductModelLook has 'items'
+    }
+    return []; // Return an empty list if the product model is not recognized
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:unveels/features/product/product_model_lipstick.dart';
+import 'package:unveels/features/product/product_model_look.dart';
+import 'package:unveels/features/product/product_model_perfume.dart';
 
 import '../../../../shared/service/pf_service.dart';
 import '../../../product/product_model.dart';
@@ -33,10 +36,20 @@ class PfBloc extends Bloc<PfEvent, PfState> {
       }
 
       final productData = await PfService().fetchProductData(personalityValue);
+
+      final productDataLip = await PfService().fetchProductLipData(personalityValue);
+
+      final productDataLook = await PfService().fetchProductLookData(personalityValue);
+
+      final productDataPerfume = await PfService().fetchProductPerfumeData(personalityValue);
+
       print(productData);
 
       emit(state.copyWith(
         productData: productData,
+        productModelLip: productDataLip,
+        productModelLook: productDataLook,
+        productModelPerfume: productDataPerfume,
         loadingProduct: false,
       ));
     } catch (e) {

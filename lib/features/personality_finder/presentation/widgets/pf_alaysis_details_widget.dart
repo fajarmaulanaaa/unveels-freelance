@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../shared/configs/asset_path.dart';
 import '../../../../shared/configs/color_config.dart';
@@ -8,12 +8,24 @@ import '../../../../shared/configs/size_config.dart';
 class PFAnalysisDetailsWidget extends StatelessWidget {
   final String title;
   final String description;
+  final int severityValue;
 
   const PFAnalysisDetailsWidget({
     super.key,
     required this.title,
     required this.description,
+    required this.severityValue,
   });
+
+  String _getSeverityLevel(int value) {
+    if (value >= 70) {
+      return "Severe";
+    } else if (value >= 40) {
+      return "Moderate";
+    } else {
+      return "Mild";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +88,9 @@ class PFAnalysisDetailsWidget extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              const Text(
-                "Mild 40%",
-                style: TextStyle(
+              Text(
+                "${_getSeverityLevel(severityValue)} $severityValue%",
+                style: const TextStyle(
                   fontSize: 14,
                   color: ColorConfig.greenSuccess,
                 ),

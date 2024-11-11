@@ -8,6 +8,9 @@ class FaState extends Equatable {
   // Product fields
   final bool? loadingProduct;
   final ProductModel? productData;
+  final ProductModelLip? productModelLip;
+  final ProductModelPerfume? productModelPerfume;
+  final ProductModelLook? productModelLook;
 
   // Error message field
   final String? errorMessage;
@@ -18,6 +21,9 @@ class FaState extends Equatable {
     this.resultFaceAnalyzeModel,
     this.loadingProduct,
     this.productData,
+    this.productModelLip,
+    this.productModelPerfume,
+    this.productModelLook,
     this.errorMessage,
   });
 
@@ -28,6 +34,9 @@ class FaState extends Equatable {
       resultFaceAnalyzeModel: null,
       loadingProduct: false,
       productData: null,
+      productModelLip: null,
+      productModelPerfume: null,
+      productModelLook: null,
       errorMessage: null,
     );
   }
@@ -38,26 +47,34 @@ class FaState extends Equatable {
     List<ResultFaceAnalyzeModel>? resultFaceAnalyzeModel,
     bool? loadingProduct,
     ProductModel? productData,
+    ProductModelLip? productModelLip,
+    ProductModelPerfume? productModelPerfume,
+    ProductModelLook? productModelLook,
     String? errorMessage,
   }) {
     return FaState(
       isAllowCamera: isAllowCamera ?? this.isAllowCamera,
       isLoading: isLoading ?? this.isLoading,
-      resultFaceAnalyzeModel:
-          resultFaceAnalyzeModel ?? this.resultFaceAnalyzeModel,
+      resultFaceAnalyzeModel: resultFaceAnalyzeModel ?? this.resultFaceAnalyzeModel,
       loadingProduct: loadingProduct ?? this.loadingProduct,
       productData: productData ?? this.productData,
+      productModelLip: productModelLip ?? this.productModelLip,
+      productModelPerfume: productModelPerfume ?? this.productModelPerfume,
+      productModelLook: productModelLook ?? this.productModelLook,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
   List<Object?> get props => [
-        isAllowCamera,
-        isLoading,
-        resultFaceAnalyzeModel,
-        loadingProduct,
-        productData,
-        errorMessage,
-      ];
+    isAllowCamera,
+    isLoading,
+    resultFaceAnalyzeModel,
+    loadingProduct,
+    productData,
+    productModelLip,
+    productModelPerfume,
+    productModelLook,
+    errorMessage,
+  ];
 }
