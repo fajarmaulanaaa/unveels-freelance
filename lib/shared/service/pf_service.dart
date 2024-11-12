@@ -93,7 +93,7 @@ class PfService {
           '$baseUrl'
               '/rest/V1/products?'
               'searchCriteria[filter_groups][0][filters][0][field]=category_id&'
-              'searchCriteria[filter_groups][0][filters][0][value]=457&'
+              'searchCriteria[filter_groups][0][filters][0][value]=448&'
               'searchCriteria[filter_groups][0][filters][0][condition_type]=eq&'
               'searchCriteria[filter_groups][1][filters][0][field]=type_id&'
               'searchCriteria[filter_groups][1][filters][0][value]=simple&'

@@ -47,7 +47,7 @@ class FaService {
               'searchCriteria[filter_groups][1][filters][0][field]=type_id&'
               'searchCriteria[filter_groups][1][filters][0][value]=simple&'
               'searchCriteria[filter_groups][1][filters][0][condition_type]=eq&'
-              'searchCriteria[filter_groups][2][filters][0][field]=personality&'
+              'searchCriteria[filter_groups][2][filters][0][field]=face_shape&'
               'searchCriteria[filter_groups][2][filters][0][value]=${personalityValue}&'
               'searchCriteria[filter_groups][2][filters][0][condition_type]=finset'
       ),
@@ -73,7 +73,7 @@ class FaService {
               'searchCriteria[filter_groups][1][filters][0][field]=type_id&'
               'searchCriteria[filter_groups][1][filters][0][value]=simple&'
               'searchCriteria[filter_groups][1][filters][0][condition_type]=eq&'
-              'searchCriteria[filter_groups][2][filters][0][field]=personality&'
+              'searchCriteria[filter_groups][2][filters][0][field]=face_shape&'
               'searchCriteria[filter_groups][2][filters][0][value]=${personalityValue}&'
               'searchCriteria[filter_groups][2][filters][0][condition_type]=finset'
       ),
@@ -94,12 +94,12 @@ class FaService {
           '$baseUrl'
               '/rest/V1/products?'
               'searchCriteria[filter_groups][0][filters][0][field]=category_id&'
-              'searchCriteria[filter_groups][0][filters][0][value]=457&'
+              'searchCriteria[filter_groups][0][filters][0][value]=448&'
               'searchCriteria[filter_groups][0][filters][0][condition_type]=eq&'
               'searchCriteria[filter_groups][1][filters][0][field]=type_id&'
               'searchCriteria[filter_groups][1][filters][0][value]=simple&'
               'searchCriteria[filter_groups][1][filters][0][condition_type]=eq&'
-              'searchCriteria[filter_groups][2][filters][0][field]=personality&'
+              'searchCriteria[filter_groups][2][filters][0][field]=face_shape&'
               'searchCriteria[filter_groups][2][filters][0][value]=${personalityValue}&'
               'searchCriteria[filter_groups][2][filters][0][condition_type]=finset'
       ),
