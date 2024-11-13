@@ -5,7 +5,6 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:unveels/features/face_analysis/presentation/cubit/fa_bloc.dart';
 import 'package:unveels/features/face_analysis/presentation/models/fa_model.dart';
 import 'package:unveels/features/face_analysis/presentation/widgets/fa_analysis_results_widget.dart';
-import 'package:unveels/features/personality_finder/presentation/cubit/pf_bloc.dart';
 
 class FaWebviewPage extends StatefulWidget {
   const FaWebviewPage({super.key});
@@ -90,6 +89,7 @@ class _FaWebviewPageState extends State<FaWebviewPage> {
                             // }
 
                             context.read<FaBloc>().add(UpdateDataResultFa(flatList));
+                            context.read<FaBloc>().add(FetchProduct());
 
                             setState(() {
                               _showAnalysisResults = true;

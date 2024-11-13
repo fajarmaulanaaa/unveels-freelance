@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unveels/features/personality_finder/presentation/pages/pf_webview_page.dart';
+import 'package:unveels/features/shop_the_look/presentation/pages/stl_webview_page.dart';
 import 'package:unveels/features/skin_analysis/presentation/pages/sa_webview_page.dart';
 import 'package:unveels/features/skin_tone_finder/presentation/pages/stf_webview_page.dart';
 import '../../features/face_analysis/presentation/pages/fa_webview_page.dart';
@@ -58,7 +59,8 @@ extension AppRouteParsing on AppRoute {
       case AppRoute.faWebView:
         return const FaWebviewPage();
       case AppRoute.stlLive:
-        return const STLLivePage();
+        return const STLWebviewPage();
+        // return const STLLivePage();
     }
   }
 

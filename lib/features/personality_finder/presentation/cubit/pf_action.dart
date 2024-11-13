@@ -21,3 +21,5 @@ class UpdateDataResultPf extends PfEvent {
 
   UpdateDataResultPf(this.decodedData);
 }
+
+class FetchProduct extends PfEvent {}

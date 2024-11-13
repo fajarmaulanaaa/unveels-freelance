@@ -9,10 +9,10 @@ List<ResultPersonalityModel> resultPersonalityModelFromJson(String str) => List<
 String resultPersonalityModelToJson(List<ResultPersonalityModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ResultPersonalityModel {
-  String name;
-  String outputName;
-  List<String> labels;
-  String outputLabel;
+  String? name;
+  String? outputName;
+  List<String>? labels;
+  String? outputLabel;
   double? outputScore;
   Map<String, double>? outputData;
   int? outputIndex;
@@ -20,10 +20,10 @@ class ResultPersonalityModel {
   String? imageData;
 
   ResultPersonalityModel({
-    required this.name,
-    required this.outputName,
-    required this.labels,
-    required this.outputLabel,
+    this.name,
+    this.outputName,
+    this.labels,
+    this.outputLabel,
     this.outputScore,
     this.outputData,
     this.outputIndex,
@@ -53,7 +53,7 @@ class ResultPersonalityModel {
   Map<String, dynamic> toJson() => {
     "name": name,
     "outputName": outputName,
-    "labels": List<dynamic>.from(labels.map((x) => x)),
+    "labels": List<dynamic>.from(labels!.map((x) => x)),
     "outputLabel": outputLabel,
     "outputScore": outputScore,
     "outputData": Map.from(outputData!).map((k, v) => MapEntry<String, dynamic>(k, v)),
